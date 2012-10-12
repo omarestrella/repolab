@@ -1,6 +1,6 @@
 # Django settings for project project.
 
-GIT_REPO_PATH = '/Development/Django/django-scribbler/'
+GIT_REPO_PATH = '/Development/Django/repolab'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

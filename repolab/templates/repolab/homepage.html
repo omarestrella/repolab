@@ -4,11 +4,11 @@
 
 {% block content %}
     <div class="row">
-        <div class="span10">
-            <h2>Projects</h2>
+        <div class="span9">
+            <h2>Repositories</h2>
         </div>
-        <div class="span2">
-            <a href="#" class="btn btn-primary pull-right">Create Project</a>
+        <div class="span3">
+            <a href="#" class="btn btn-primary pull-right">Create Repository</a>
         </div>
     </div>
 
@@ -22,10 +22,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for project in projects %}
+                    {% for repo in repos %}
                         <tr>
-                            <td>{{ project.name }}</td>
-                            <td>{{ project.path }}</td>
+                            <td><a href="{% url 'repo_url' repo.slug %}">{{ repo.name }}</a></td>
+                            <td>{{ repo.path }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
