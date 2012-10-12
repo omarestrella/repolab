@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Last Updated</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for node in root.nodes %}
+                        <tr>
+                            <td>
+                                {% if node.is_dir %}
+                                    <i class="icon-folder-open"></i>
+                                {% else %}
+                                    <i class="icon-file"></i>
+                                {% endif %}
+
+                                <a href="#">{{ node }}</a>
+                            </td>
+                            <td>
+                                {{ node.last_changeset.date }}
+                            </td>
+                            <td>
+                                {{ node.last_changeset.message }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
