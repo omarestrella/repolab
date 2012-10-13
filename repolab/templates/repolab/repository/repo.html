@@ -26,8 +26,8 @@
 
                                 <a href="#">{{ node }}</a>
                             </td>
-                            <td>
-                                {{ node.last_changeset.date|relative_time}}
+                            <td title="{{ node.last_changeset.date }}">
+                                {{ node.last_changeset.date|relative_time }}
                             </td>
                             <td>
                                 {{ node.last_changeset.message }}
