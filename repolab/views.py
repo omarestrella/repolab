@@ -1,24 +1,13 @@
-from django.conf import settings
+from django.http import Http404
 from django.views.generic import TemplateView, ListView, DetailView
 
-import vcs
-
 from repolab import models
-from repolab import repoutils
 
 
 class Homepage(ListView):
     model = models.Repository
     template_name = 'repolab/homepage.html'
     context_object_name = 'repos'
-
-    def get_context_data(self, **kwargs):
-        context = super(Homepage, self).get_context_data(**kwargs)
-
-        repo = vcs.get_repo(path=settings.GIT_REPO_PATH)
-        context['root'] = repo.get_changeset().get_node('')
-
-        return context
 
 
 class ViewRepo(DetailView):
@@ -30,22 +19,30 @@ class ViewRepo(DetailView):
         context = super(ViewRepo, self).get_context_data(**kwargs)
 
         context['nodes'] = self.object.root.nodes
-
-        # Add last_changeset to dir nodes
-        for dirnode in context['nodes']:
-            if not dirnode.is_dir(): continue
-            dirnode.last_changeset = repoutils.dir_get_last_changeset(dirnode)
-
         return context
 
 
-class ViewChangeset(TemplateView):
-    template_name = 'repolab/node.html'
+class ViewChangeset(ViewRepo):
+    template_name = 'repolab/repository/repo.html'
 
     def get_context_data(self, **kwargs):
         context = super(ViewChangeset, self).get_context_data(**kwargs)
+        repo = self.object
+        changeset = self.kwargs.get('changeset', None)
 
-        repo = vcs.get_repo(path=settings.GIT_REPO_PATH)
-        context['root'] = repo.get_changeset(self.kwargs['changeset']).get_node('')
-
+        # Need to check if the changeset is a branch or not
+        branch = repo.branches.get(changeset, None)
+        if branch:
+            changeset = repo.branches[changeset]
+        else:
+            raise Http404
+        context['nodes'] = repo.get_repo_nodes(changeset=changeset)
         return context
+
+
+class EditChangesetPath(TemplateView):
+    pass
+
+
+class ViewChangesetCommit(TemplateView):
+    pass

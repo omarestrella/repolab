@@ -1,5 +1,6 @@
 from collections import deque
 
+
 def walk_file_nodes(dirnode):
     """Generator for all files in a vcs DirNode."""
 
@@ -11,6 +12,7 @@ def walk_file_nodes(dirnode):
             stack.extend(node.nodes)
         else:
             yield node
+
 
 def dir_get_last_changeset(dirnode):
     """Return the last changeset of a directory."""
