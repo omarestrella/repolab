@@ -18,5 +18,8 @@ class Repository(models.Model):
         repo = vcs.get_repo(path=self.path)
         return repo.get_changeset().get_node('')
 
+    class Meta:
+        verbose_name_plural = "repositories"
+
     def __unicode__(self):
         return u'%s' % self.name
