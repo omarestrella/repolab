@@ -24,6 +24,11 @@ class RepoMixin(object):
     def get_repo(self, *args, **kwargs):
         return get_object_or_404(models.Repository, slug=self.kwargs.get('slug'))
 
+    def get_context_data(self, **kwargs):
+        context = {}
+        context['changeset'] = self.kwargs.get('changeset', 'master')
+        return context
+
 
 class Homepage(ListView):
     model = models.Repository
@@ -38,6 +43,7 @@ class ViewRepo(DetailView, RepoMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ViewRepo, self).get_context_data(**kwargs)
+        context.update(RepoMixin.get_context_data(self, **kwargs))
         context['nodes'] = self.get_repo().root
         return context
 
@@ -49,6 +55,7 @@ class ViewChangeset(DetailView, RepoMixin, ChangesetMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ViewChangeset, self).get_context_data(**kwargs)
+        context.update(RepoMixin.get_context_data(self, **kwargs))
         context['nodes'] = self.get_repo().get_repo_nodes(changeset=self.get_changeset())
         return context
 
@@ -60,6 +67,7 @@ class ViewChangesetPath(DetailView, RepoMixin, ChangesetMixin):
 
     def get_context_data(self, **kwargs):
         context = super(ViewChangesetPath, self).get_context_data(**kwargs)
+        context.update(RepoMixin.get_context_data(self, **kwargs))
         repo = self.get_repo()
         changeset = self.get_changeset()
         context['nodes'] = repo.get_repo_nodes(changeset=changeset, node=self.kwargs.get('path'))

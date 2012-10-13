@@ -37,7 +37,7 @@
                                     <i class="icon-file"></i>
                                 {% endif %}
 
-                                <a href="#">{{ node }}</a>
+                                <a href="{% url 'repo_path_url' repo.slug changeset node.path %}">{{ node }}</a>
                             </td>
                             <td title="{{ node.last_changeset.date }}">
                                 {{ node.last_changeset.date|relative_time }}
