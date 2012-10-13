@@ -2,6 +2,7 @@
 
 {% load url from future %}
 {% load prettytimes_tags %}
+{% load repolab_tags %}
 
 {% block content %}
     <div class="row">
@@ -30,7 +31,7 @@
                                 {{ node.last_changeset.date|relative_time }}
                             </td>
                             <td>
-                                {{ node.last_changeset.message }}
+                                {{ node.last_changeset.message|cut_commit_msg }}
                             </td>
                         </tr>
                     {% endfor %}
