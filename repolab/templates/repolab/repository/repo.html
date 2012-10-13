@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     {% for node in nodes %}
-                        <tr>
+                        <tr class="{% cycle 'row_odd' 'row_even' %}">
                             <td>
                                 {% if node.is_dir %}
                                     <i class="icon-folder-open"></i>

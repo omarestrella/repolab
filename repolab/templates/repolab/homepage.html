@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     {% for repo in repos %}
-                        <tr>
+                        <tr class="{% cycle 'row_odd' 'row_even' %}">
                             <td><a href="{% url 'repo_url' repo.slug %}">{{ repo.name }}</a></td>
                             <td>{{ repo.path }}</td>
                         </tr>
