@@ -1,6 +1,7 @@
 django==1.4
 south
 vcs
+django-pretty-times
 
 # Required to use git with vcs
 dulwich

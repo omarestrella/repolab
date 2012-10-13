@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'repolab',
     'south',
+    'pretty_times',
 )
 
 # A sample logging configuration. The only tangible logging

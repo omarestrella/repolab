@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load url from future %}
+{% load prettytimes_tags %}
 
 {% block content %}
     <div class="row">
@@ -26,7 +27,7 @@
                                 <a href="#">{{ node }}</a>
                             </td>
                             <td>
-                                {{ node.last_changeset.date }}
+                                {{ node.last_changeset.date|relative_time}}
                             </td>
                             <td>
                                 {{ node.last_changeset.message }}
