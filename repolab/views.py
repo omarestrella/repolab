@@ -1,7 +1,28 @@
 from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
 
 from repolab import models
+
+
+class ChangesetMixin(object):
+    def get_changeset(self, *args, **kwargs):
+        changeset = self.kwargs.get('changeset', None)
+        repo = get_object_or_404(models.Repository, slug=self.kwargs.get('slug', None))
+
+        # Need to check if the changeset is a branch or not
+        branch = repo.branches.get(changeset, None)
+        if branch:
+            changeset = repo.branches[changeset]
+        else:
+            raise Http404
+
+        return changeset
+
+
+class RepoMixin(object):
+    def get_repo(self, *args, **kwargs):
+        return get_object_or_404(models.Repository, slug=self.kwargs.get('slug'))
 
 
 class Homepage(ListView):
@@ -10,33 +31,38 @@ class Homepage(ListView):
     context_object_name = 'repos'
 
 
-class ViewRepo(DetailView):
+class ViewRepo(DetailView, RepoMixin):
     model = models.Repository
-    template_name = 'repolab/repository/repo.html'
+    template_name = 'repolab/repository/nodes.html'
     context_object_name = 'repo'
 
     def get_context_data(self, **kwargs):
         context = super(ViewRepo, self).get_context_data(**kwargs)
-
-        context['nodes'] = self.object.root.nodes
+        context['nodes'] = self.get_repo().root
         return context
 
 
-class ViewChangeset(ViewRepo):
-    template_name = 'repolab/repository/repo.html'
+class ViewChangeset(DetailView, RepoMixin, ChangesetMixin):
+    model = models.Repository
+    template_name = 'repolab/repository/nodes.html'
+    context_object_name = 'repo'
 
     def get_context_data(self, **kwargs):
         context = super(ViewChangeset, self).get_context_data(**kwargs)
-        repo = self.object
-        changeset = self.kwargs.get('changeset', None)
+        context['nodes'] = self.get_repo().get_repo_nodes(changeset=self.get_changeset())
+        return context
 
-        # Need to check if the changeset is a branch or not
-        branch = repo.branches.get(changeset, None)
-        if branch:
-            changeset = repo.branches[changeset]
-        else:
-            raise Http404
-        context['nodes'] = repo.get_repo_nodes(changeset=changeset)
+
+class ViewChangesetPath(DetailView, RepoMixin, ChangesetMixin):
+    model = models.Repository
+    template_name = 'repolab/repository/nodes.html'
+    context_object_name = 'repo'
+
+    def get_context_data(self, **kwargs):
+        context = super(ViewChangesetPath, self).get_context_data(**kwargs)
+        repo = self.get_repo()
+        changeset = self.get_changeset()
+        context['nodes'] = repo.get_repo_nodes(changeset=changeset, node=self.kwargs.get('path'))
         return context
 
 
