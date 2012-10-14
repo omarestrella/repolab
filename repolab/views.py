@@ -26,7 +26,8 @@ class RepoMixin(object):
 
     def get_context_data(self, **kwargs):
         context = {}
-        context['changeset'] = self.kwargs.get('changeset', 'master')
+        repo = self.get_repo()
+        context['changeset'] = self.kwargs.get('changeset', repo.default_branch)
         return context
 
 

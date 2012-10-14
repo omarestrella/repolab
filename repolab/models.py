@@ -15,8 +15,11 @@ class Repository(models.Model):
         self.slug = slugify(self.name)
         super(Repository, self).save()
 
+    def get_repo(self):
+        return vcs.get_repo(path=str(self.path))
+
     def get_repo_nodes(self, changeset=None, node=''):
-        repo = vcs.get_repo(path=self.path)
+        repo = self.get_repo()
         nodes = repo.get_changeset(changeset).get_node(node)
         for dirnode in nodes:
             if not dirnode.is_dir():
@@ -33,8 +36,11 @@ class Repository(models.Model):
         """
         Return the repository's branches as an OrderedDict
         """
-        repo = vcs.get_repo(path=self.path)
-        return repo.branches
+        return self.get_repo().branches
+
+    @property
+    def default_branch(self):
+        return self.get_repo().DEFAULT_BRANCH_NAME
 
     class Meta:
         verbose_name_plural = "repositories"
