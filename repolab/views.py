@@ -10,11 +10,11 @@ class ChangesetMixin(object):
         changeset = self.kwargs.get('changeset', None)
         repo = get_object_or_404(models.Repository, slug=self.kwargs.get('slug', None))
 
-        # Need to check if the changeset is a branch or not
-        branch = repo.branches.get(changeset, None)
-        if branch:
+        # If changeset is a branch name, use latest changeset from that branch
+        if changeset in repo.branches:
             changeset = repo.branches[changeset]
-        else:
+
+        elif not repo.has_changeset(changeset):
             raise Http404
 
         return changeset

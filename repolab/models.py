@@ -1,3 +1,5 @@
+from itertools import imap
+
 from django.db import models
 from django.template.defaultfilters import slugify
 
@@ -41,6 +43,10 @@ class Repository(models.Model):
     @property
     def default_branch(self):
         return self.get_repo().DEFAULT_BRANCH_NAME
+
+    def has_changeset(self, changeset_hash):
+        all_changesets = self.get_repo().get_changesets()
+        return changeset_hash in imap(lambda x: x.raw_id, all_changesets)
 
     class Meta:
         verbose_name_plural = "repositories"
