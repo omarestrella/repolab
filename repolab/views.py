@@ -60,6 +60,7 @@ class ViewChangesetPath(DetailView, RepoMixin, ChangesetMixin):
         repo = self.get_repo()
         changeset = self.get_changeset()
         context['nodes'] = repo.get_repo_nodes(changeset=changeset, node=self.kwargs.get('path'))
+        context['path'] = self.kwargs.get('path')
         return context
 
 
