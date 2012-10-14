@@ -1,6 +1,4 @@
-# Django settings for project project.
-
-GIT_REPO_PATH = '/Development/Django/RiboLab'
+# Django settings for repolab
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
