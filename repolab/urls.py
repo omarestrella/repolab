@@ -8,7 +8,7 @@ urlpatterns = patterns('',
     url(r'^repo/(?P<slug>[\w\d_-]+)/$', views.ViewRepo.as_view(), name='repo_url'),
 
     url(r'^repo/(?P<slug>[\w\d_-]+)/tree/(?P<changeset>[\w\d]+)/$',
-        views.ViewChangeset.as_view(), name='repo_changeset_url'),
+        views.ViewChangesetPath.as_view(), name='repo_changeset_url', kwargs={'path':'/'}),
     url(r'^repo/(?P<slug>[\w\d_-]+)/tree/(?P<changeset>[\w\d]+)/(?P<path>.*)/$',
         views.ViewChangesetPath.as_view(), name='repo_path_url'),
 

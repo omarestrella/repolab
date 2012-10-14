@@ -49,18 +49,6 @@ class ViewRepo(DetailView, RepoMixin):
         return context
 
 
-class ViewChangeset(DetailView, RepoMixin, ChangesetMixin):
-    model = models.Repository
-    template_name = 'repolab/repository/nodes.html'
-    context_object_name = 'repo'
-
-    def get_context_data(self, **kwargs):
-        context = super(ViewChangeset, self).get_context_data(**kwargs)
-        context.update(RepoMixin.get_context_data(self, **kwargs))
-        context['nodes'] = self.get_repo().get_repo_nodes(changeset=self.get_changeset())
-        return context
-
-
 class ViewChangesetPath(DetailView, RepoMixin, ChangesetMixin):
     model = models.Repository
     template_name = 'repolab/repository/nodes.html'
