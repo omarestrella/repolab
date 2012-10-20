@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     url(r'^repo/(?P<slug>[\w\d_-]+)/tree/(?P<changeset>[\w\d]+)/(?P<path>.*)/$',
         views.ViewChangesetPath.as_view(), name='repo_path_url'),
 
+    url(r'^repo/(?P<slug>[\w\d_-]+)/changesets/$',
+        views.ListChangesets.as_view(), name='list_changesets_url'),
+
     url(r'^repo/(?P<slug>[\w\d_-]+)/edit/(?P<changeset>[\w\d]+)/(?P<path>[.*])/$',
         views.EditChangesetPath.as_view(), name='repo_edit_url'),
 

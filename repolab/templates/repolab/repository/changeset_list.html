@@ -1,0 +1,33 @@
+
+{% extends "repolab/repository/repo_base.html" %}
+
+{% load url from future %}
+{% load prettytimes_tags %}
+{% load repolab_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Hash</th>
+                        <th>Message</th>
+                        <th>Time</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for changeset in changesets %}
+                        <tr class="{% cycle 'row_odd' 'row_even' %}">
+                            <td class="hashtext"><a href="#">{{ changeset.id|truncatechars:11|cut:"." }}</a></td>
+                            <td>{{ changeset.message|cut_commit_msg }}</td>
+                            <td title="{{ changeset.date }}">{{ changeset.date|relative_time }}</td>
+                            <td>{{ changeset.author_name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

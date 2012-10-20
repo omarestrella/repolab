@@ -1,0 +1,20 @@
+
+{% extends "base.html" %}
+
+{% load url from future %}
+
+{% block navbar %}
+    {{ block.super }}
+    <div class="row">
+        <div class="span12">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav">
+                        <li><a href="{% url 'repo_url' repo.slug %}">Code</a></li>
+                        <li><a href="{% url 'list_changesets_url' repo.slug %}">Commits</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock navbar %}

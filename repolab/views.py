@@ -118,3 +118,18 @@ class EditChangesetPath(TemplateView):
 
 class ViewChangesetCommit(TemplateView):
     pass
+
+
+class ListChangesets(DetailView, RepoMixin):
+    model = models.Repository
+    template_name = 'repolab/repository/changeset_list.html'
+    context_object_name = 'repo'
+
+    def get_context_data(self, **kwargs):
+        context = super(ListChangesets, self).get_context_data(**kwargs)
+        context.update(RepoMixin.get_context_data(self, **kwargs))
+        repo = self.get_repo()
+
+        context['changesets'] = repo.changesets
+
+        return context

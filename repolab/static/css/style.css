@@ -10,3 +10,6 @@ h3 {
 .row_even {
   background-color: #f8f8f8;
 }
+.hashtext {
+  font-family: monospace;
+}

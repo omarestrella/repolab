@@ -40,6 +40,12 @@ class Repository(models.Model):
         """
         return self.get_repo().branches
 
+    def changesets(self):
+        """
+        Return all the repository's changesets as a generator of changesets.
+        """
+        return self.get_repo().get_changesets()
+
     @property
     def default_branch(self):
         return self.get_repo().DEFAULT_BRANCH_NAME
