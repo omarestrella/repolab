@@ -23,11 +23,14 @@ class Repository(models.Model):
     def get_repo_nodes(self, changeset=None, node=''):
         repo = self.get_repo()
         nodes = repo.get_changeset(changeset).get_node(node)
-        for dirnode in nodes:
-            if not dirnode.is_dir():
-                continue
-            dirnode.last_changeset = repoutils.dir_get_last_changeset(dirnode)
-        return nodes
+        if nodes.is_file():
+            return nodes
+        else:
+            for dirnode in nodes:
+                if not dirnode.is_dir():
+                    continue
+                dirnode.last_changeset = repoutils.dir_get_last_changeset(dirnode)
+            return nodes
 
     @property
     def root(self):

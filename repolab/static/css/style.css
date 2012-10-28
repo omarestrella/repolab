@@ -13,3 +13,11 @@ h3 {
 .hashtext {
   font-family: monospace;
 }
+.codehilite .highlighttable {
+  width: 100%;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+.codehilite .highlighttable pre {
+  font-size: 12px;
+}

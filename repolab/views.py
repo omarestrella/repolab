@@ -105,7 +105,13 @@ class ViewChangesetPath(DetailView, ChangesetMixin):
         repo = self.get_repo()
         changeset = self.get_changeset()
 
-        context['nodes'] = repo.get_repo_nodes(changeset=changeset, node=self.kwargs.get('path'))
+        nodes = repo.get_repo_nodes(changeset=changeset, node=self.kwargs.get('path'))
+        context['nodes'] = nodes
+
+        # Adjust template name based on type of node
+        if nodes.is_file():
+            self.template_name = 'repolab/repository/file.html'
+
         context['path'] = self.kwargs.get('path')
         context['breadcrumbs'] = self.get_breadcrumbs(context['path'])
 
