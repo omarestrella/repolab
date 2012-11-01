@@ -43,6 +43,7 @@ class Repository(models.Model):
         """
         return self.get_repo().branches
 
+    @property
     def changesets(self):
         """
         Return all the repository's changesets as a generator of changesets.

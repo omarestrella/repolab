@@ -4,6 +4,7 @@ from django.utils.safestring import mark_safe
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from repolab import models
 
@@ -136,6 +137,22 @@ class ListChangesets(DetailView, RepoMixin):
         context.update(RepoMixin.get_context_data(self, **kwargs))
         repo = self.get_repo()
 
-        context['changesets'] = repo.changesets
+        all_changesets = list(repo.changesets)
+        all_changesets.reverse()
+
+        # Paginate
+        paginator = Paginator(all_changesets, 20)
+        page_num = self.request.GET.get('page')
+        try:
+            changesets = paginator.page(page_num)
+        except PageNotAnInteger:
+            # Default to first page
+            changesets = paginator.page(1)
+        except EmptyPage:
+            # If page is out of range (e.g. 9999), give last page of results.
+            changesets = paginator.page(paginator.num_pages)
+
+        context['changesets'] = changesets
+        context['paginator'] = paginator
 
         return context

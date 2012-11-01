@@ -11,23 +11,48 @@
             <table class="table table-condensed">
                 <thead>
                     <tr>
-                        <th>Hash</th>
                         <th>Message</th>
                         <th>Time</th>
                         <th>Author</th>
+                        <th>Hash</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for changeset in changesets %}
                         <tr class="{% cycle 'row_odd' 'row_even' %}">
-                            <td class="hashtext"><a href="#">{{ changeset.id|truncatechars:11|cut:"." }}</a></td>
                             <td>{{ changeset.message|cut_commit_msg }}</td>
                             <td title="{{ changeset.date }}">{{ changeset.date|relative_time }}</td>
                             <td>{{ changeset.author_name }}</td>
+                            <td class="hashtext"><a href="#">{{ changeset.id|truncatechars:11|cut:"." }}</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
+
+            {% if paginator.num_pages != 1 %}
+                <div class="pagination pagination-centered">
+                    <ul>
+                        {% if changesets.has_previous %}
+                            <li><a href="?page={{ changesets.previous_page_number }}">Prev</a></li>
+                        {% else %}
+                            <li class="disabled"><span>Prev</span></li>
+                        {% endif %}
+                        {% for i in paginator.page_range %}
+                            {% if i == changesets.number %}
+                                <li><span>{{ i }}</span></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if changesets.has_next %}
+                            <li><a href="?page={{ changesets.next_page_number }}">Next</a></li>
+                        {% else %}
+                            <li class="disabled"><span>Next</span></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 {% endblock content %}
