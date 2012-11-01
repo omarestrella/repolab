@@ -3,5 +3,9 @@ south
 vcs
 django-pretty-times
 
-# Required to use git with vcs
+# Only required for git
+# vcs uses this internally
 dulwich
+
+# Only required for mercurial
+mercurial
