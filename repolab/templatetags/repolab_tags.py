@@ -29,3 +29,15 @@ def render_file(file_):
     """
 
     return annotate.annotate_highlight(file_, order=('ls', 'code'))
+
+
+@register.filter
+def is_readme(file_):
+    """
+    Checks the extension of `file_` to see if it is a supported readme
+    file type
+    """
+
+    SUPPORTED_EXTS = ('md',)
+
+    return file_.extension in SUPPORTED_EXTS

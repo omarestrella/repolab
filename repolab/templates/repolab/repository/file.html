@@ -14,9 +14,16 @@
         <div class="span12">
             {% include "repolab/repository/breadcrumbs.html" %}
 
-            <div class="codehilite">
-                {{ nodes|render_file|safe }}
-            </div>
+            {% with nodes as node %}
+                {% if node|is_readme %}
+                    {% load markup %}
+                    {{ node.content|markdown }}
+                {% else %}
+                    <div class="codehilite">
+                        {{ node|render_file|safe }}
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
     </div>
 {% endblock content %}
