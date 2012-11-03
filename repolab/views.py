@@ -3,7 +3,7 @@ from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from repolab import models
@@ -78,6 +78,11 @@ class Homepage(ListView):
     model = models.Repository
     template_name = 'repolab/homepage.html'
     context_object_name = 'repos'
+
+
+class AddRepo(CreateView):
+    model = models.Repository
+    template_name = 'repolab/repository/add.html'
 
 
 class ViewRepo(DetailView, RepoMixin):

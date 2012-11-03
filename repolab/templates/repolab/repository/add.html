@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load url from future %}
+{% load bootstrap_toolkit %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12">
+            <form class="form form-horizontal" method="post" action="{% url 'add_repo_url' %}">
+                <legend>Add Repository</legend>
+                {{ form|as_bootstrap:"horizontal" }}
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn btn-primary">Add Repository</button>
+                        <a href="{% url 'homepage_url' %}" class="btn">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

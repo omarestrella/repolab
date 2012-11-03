@@ -5,6 +5,8 @@ from repolab import views
 urlpatterns = patterns('',
     url(r'^$', views.Homepage.as_view(), name='homepage_url'),
 
+    url(r'^repo/add/$', views.AddRepo.as_view(), name='add_repo_url'),
+
     url(r'^repo/(?P<slug>[\w\d_-]+)/$', views.ViewRepo.as_view(), name='repo_url'),
 
     url(r'^repo/(?P<slug>[\w\d_-]+)/tree/(?P<changeset>[\w\d]+)/$',

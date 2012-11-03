@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     'repolab',
     'south',
     'pretty_times',
+    'bootstrap_toolkit',
 )
 
 # A sample logging configuration. The only tangible logging

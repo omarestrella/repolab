@@ -2,6 +2,8 @@ django==1.4
 south
 vcs
 django-pretty-times
+django-bootstrap-toolkit
+markdown
 
 # Only required for git
 # vcs uses this internally
