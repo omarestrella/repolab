@@ -7,6 +7,7 @@
     <div class="row">
         <div class="span12">
             <form class="form form-horizontal" method="post" action="{% url 'add_repo_url' %}">
+                {% csrf_token %}
                 <legend>Add Repository</legend>
                 {{ form|as_bootstrap:"horizontal" }}
                 <div class="control-group">

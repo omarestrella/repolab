@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from repolab import models
+from repolab import models, forms
 
 
 class RepoMixin(object):
@@ -51,7 +51,7 @@ class RepoMixin(object):
                 'url': mark_safe(reverse_lazy('repo_path_url', kwargs={
                     'slug': repo.slug,
                     'changeset': changeset_name,
-                    'path': '/'.join(path[0:i+1]),
+                    'path': '/'.join(path[0:i + 1]),
                 })),
             })
 
@@ -83,6 +83,7 @@ class Homepage(ListView):
 class AddRepo(CreateView):
     model = models.Repository
     template_name = 'repolab/repository/add.html'
+    form_class = forms.RepoForm
 
 
 class ViewRepo(DetailView, RepoMixin):

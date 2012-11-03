@@ -32,6 +32,10 @@ class Repository(models.Model):
                 dirnode.last_changeset = repoutils.dir_get_last_changeset(dirnode)
             return nodes
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('repo_url', (self.slug,), {})
+
     @property
     def root(self):
         return self.get_repo_nodes()
