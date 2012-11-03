@@ -1,11 +1,11 @@
-body {
-  margin-top: 40px;
-}
 h1,
 h2,
 h3 {
   margin-top: 0;
   padding: 0;
+}
+.navbar-static-top {
+  margin-bottom: 50px;
 }
 .row_even {
   background-color: #f8f8f8;

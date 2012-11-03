@@ -11,6 +11,25 @@
     {% block extracss %}{% endblock extracss %}
 </head>
 <body>
+    {% block global_navbar %}
+        <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{% url 'homepage_url' %}">repolab</a>
+                    <ul class="nav">
+                        <li><a href="{% url 'homepage_url' %}">Repositories</a></li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li>
+                            <form class="navbar-search">
+                                <input type="text" class="search-query" placeholder="Search..." />
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endblock global_navbar %}
     <div class="container">
         {% block navbar %}{% endblock navbar %}
         {% block content %}{% endblock content %}
